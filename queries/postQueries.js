@@ -6,7 +6,7 @@ const getAllPosts = async (orderBy) => {
 }
 
 const getOnePostById = async (id) => {
-    const [results] = await pool.query('SELECT * FROM post WHERE id = ?', [id]); // Corrige la tabla y el placeholder
+    const [results] = await pool.query('SELECT * FROM post WHERE id = ?', [id]);
     return results[0];
 }
 
