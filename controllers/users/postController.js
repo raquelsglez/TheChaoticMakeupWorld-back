@@ -3,13 +3,14 @@ const postQueries = require('../../queries/postQueries.js');
 const getPosts = async (req, res, next) => {
     const order = req.query.order;
     let orderBy = 'created_at DESC'
+    const title = req.query.title;
 
     if (order === 'created_at') {
         orderBy = 'created_at ASC';
     }
 
     try {
-        const response = await postQueries.getAllPosts(orderBy)
+        const response = await postQueries.getAllPosts(orderBy, title)
         res.send(response)
     } catch (error) {
         res.status(500).json({ message: "There was a problem trying to get posts"});
