@@ -11,9 +11,9 @@ const getPosts = async (req, res, next) => {
 
     try {
         const response = await postQueries.getAllPosts(orderBy, title)
-        res.send(response)
+        return res.send(response)
     } catch (error) {
-        res.status(500).json({ message: "There was a problem trying to get posts"});
+        return res.status(500).json({ message: "There was a problem trying to get posts"});
     };
 };
 
@@ -22,11 +22,11 @@ const getPost = async (req, res, next) => {
         const { id } = req.params;
         const response = await postQueries.getOnePostById(id)
         if (!response){
-            res.status(404).json({ message: "Post not found"});
+            return res.status(404).json({ message: "Post not found"});
         }
-        res.send(response)
+        return res.send(response)
     } catch (error) {
-        res.status(500).json({ message: "There was a problem trying to get post"});
+        return res.status(500).json({ message: "There was a problem trying to get post"});
     };
 };
 

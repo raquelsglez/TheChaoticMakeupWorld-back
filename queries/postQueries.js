@@ -1,4 +1,4 @@
-const pool = require('../db.js');
+const pool = require('../config/db.js');
 
 const getAllPosts = async (orderBy, title) => {
     let query = 'SELECT * FROM post'
