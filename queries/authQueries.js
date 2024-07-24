@@ -16,9 +16,15 @@ const getUserByUsername = async(username) => {
     return results.rows[0];
 }
 
+const getUserById = async(id) => {
+    const results = await client.query('SELECT * FROM users WHERE id = $1', [id]);
+    return results.rows[0];
+}
+
 
 module.exports = {
     createUser,
     getUserByEmail,
     getUserByUsername,
+    getUserById
 }

@@ -20,7 +20,6 @@ const registerUser = async (email, password) =>{
     try{
         return await createUserWithEmailAndPassword(auth, email, password);
     } catch (error){
-        console.log(error)
         throw error;
     }
 };

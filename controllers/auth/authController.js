@@ -45,7 +45,6 @@ const getUser = async(req, res, next) => { //controlador para obtener usuario, i
         return res.send(user);
 
     } catch (error) {
-        console.log(error.code)
         return res.status(500).json({ message: "There was a problem trying to get the user"});
     };
 };

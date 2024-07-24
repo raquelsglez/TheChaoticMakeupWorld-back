@@ -18,3 +18,17 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE Favorites (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id_users UUID NOT NULL,
+    id_posts UUID NOT NULL,
+    CONSTRAINT fk_user
+        FOREIGN KEY(id_users) 
+        REFERENCES users(id),
+    CONSTRAINT fk_post
+        FOREIGN KEY(id_posts) 
+        REFERENCES posts(id),
+    CONSTRAINT unique_user_post 
+        UNIQUE(id_users, id_posts)
+);
