@@ -8,8 +8,8 @@ const authRoutes = require('./routes/auth/authRoutes');
 
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors()); //cors -> para permitir solicitudes desde el front
+app.use(bodyParser.json()); //bodyParser -> analiza cuerpos de solicutds json
 
 app.use('/api/posts', postRoutes);
 app.use('/api/auth', authRoutes);

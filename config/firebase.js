@@ -2,7 +2,7 @@ const { initializeApp } = require("firebase/app");
 const { getAuth, signInWithEmailAndPassword , createUserWithEmailAndPassword} = require("firebase/auth");
 require('dotenv').config();
 
-const firebaseConfig = {
+const firebaseConfig = { //configuracion firebase
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_DOMAIN,
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -12,9 +12,10 @@ const firebaseConfig = {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig); //conexion con firebase (crea conexion)
-const auth = getAuth(app); //credenciales para la conexion (comprueba que los datos son correctos)
+const app = initializeApp(firebaseConfig); //inicializa la aplicacion de firebase (crea conexion)
+const auth = getAuth(app); //obtiene las credenciales para la conexion (comprueba que los datos son correctos)
 
+//registrar usuario en firebase
 const registerUser = async (email, password) =>{
     try{
         return await createUserWithEmailAndPassword(auth, email, password);
@@ -24,6 +25,7 @@ const registerUser = async (email, password) =>{
     }
 };
 
+//iniciar sesión en firebase
 const loginUser = async (email, password) =>{  
     try{
         await signInWithEmailAndPassword(auth, email, password);
