@@ -1,6 +1,6 @@
 const postQueries = require('../../queries/postQueries.js');
 const favoriteQueries = require('../../queries/favoriteQueries');
-require('dotenv').config();
+
 
 const getPosts = async (req, res, next) => {
     const order = req.query.order; //obtener parametro de orden de la query
@@ -24,11 +24,11 @@ const getPost = async (req, res, next) => {
     let isFavorite = false;
     try {
         const { id } = req.params;
-        //headers->se utilizan para enviar información adicional junto con las solicitudes HTTP ->
-        //-> authorization -> Contiene credenciales para autenticar al cliente con el servidor
+   
+        //verificacion de si el post es fav para el user que hace la solicitud: 
         
-        if(req.headers.authorization){//si la solicitud tiene autorizacion:->
-            const favorite = await favoriteQueries.checkFavorite(id, req.headers.authorization);//->verificar si el post es fav para el user autorizado
+        if(req.user){//si la solicitud tiene user:->
+            const favorite = await favoriteQueries.checkFavorite(id, req.user.id);//->verificar si el post es fav para el user autorizado
             if(favorite){ //si es favorito:
                 isFavorite = true;
             }
