@@ -23,6 +23,5 @@ const requireToken = (req, res, next) => {
 };
 
 module.exports = {
-    verifyToken,
     requireToken,
 };
