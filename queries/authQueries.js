@@ -21,10 +21,21 @@ const getUserById = async(id) => {
     return results.rows[0];
 }
 
+const getAdminByEmail = async(email) => {
+    const results = await client.query('SELECT * FROM administrators WHERE email = $1', [email]);
+    return results.rows[0];
+}
+
+const createAdmin = async (email) => {
+    return await client.query('INSERT INTO administrators (email) VALUES ($1)',[email]);
+};
+
 
 module.exports = {
     createUser,
     getUserByEmail,
     getUserByUsername,
-    getUserById
+    getUserById,
+    getAdminByEmail,
+    createAdmin,
 }

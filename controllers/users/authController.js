@@ -1,5 +1,5 @@
 const authQueries = require('../../queries/authQueries.js');
-const firebase = require('../../config/firebase.js');
+const firebase = require('../../config/firebase/firebase.js');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 

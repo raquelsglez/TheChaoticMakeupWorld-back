@@ -12,7 +12,7 @@ const firebaseConfig = { //configuracion firebase
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig); //inicializa la aplicacion de firebase (crea conexion)
+const app = initializeApp(firebaseConfig, 'appUser'); //inicializa la aplicacion de firebase (crea conexion)
 const auth = getAuth(app); //obtiene las credenciales para la conexion (comprueba que los datos son correctos)
 
 //registrar usuario en firebase

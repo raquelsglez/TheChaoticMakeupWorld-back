@@ -19,6 +19,12 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE admin (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    email VARCHAR(50) UNIQUE,
+    is_active BOOLEAN DEFAULT FALSE
+);
+
 CREATE TABLE Favorites (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     id_users UUID NOT NULL,
