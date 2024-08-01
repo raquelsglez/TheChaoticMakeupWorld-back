@@ -34,10 +34,6 @@ const getAdmin = async(req, res, next) => { //controlador para obtener usuario, 
             return res.status(404).json({ message: "Admin not found"});
         }
 
-        if (!admin.is_active){
-            return res.status(404).json({ message: "Admin not activated"});
-        }
-
         const token = jwt.sign({ id: admin.id, email: admin.email }, process.env.ADMIN_JWT_SECRET); //genero token
 
         admin.token  = token; //le añado el token al objeto admin

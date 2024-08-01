@@ -19,10 +19,9 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE admin (
+CREATE TABLE administrators (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     email VARCHAR(50) UNIQUE,
-    is_active BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE Favorites (
@@ -32,9 +31,11 @@ CREATE TABLE Favorites (
     CONSTRAINT fk_user
         FOREIGN KEY(id_users) 
         REFERENCES users(id),
+        ON DELETE CASCADE,
     CONSTRAINT fk_post
         FOREIGN KEY(id_posts) 
         REFERENCES posts(id),
+        ON DELETE CASCADE,
     CONSTRAINT unique_user_post 
         UNIQUE(id_users, id_posts)
 );
