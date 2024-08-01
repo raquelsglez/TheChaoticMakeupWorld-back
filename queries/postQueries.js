@@ -2,6 +2,25 @@
 
 const client = require('../config/db.js');
 
+const getAllPostsUser = async (orderBy, title) => {
+    let query = 'SELECT id, title, text, image FROM posts'
+    
+    if (title) { //opcion de obtner los posts con filtrado por title
+        query += ` WHERE title ILIKE '%${title}%'`;
+    }
+
+    if (orderBy){ //opcion de obtener los posts por orden asc o desc
+        query += (` ORDER BY ${orderBy}`)
+    }
+    const results = await client.query(query);
+    return results.rows;
+};
+
+const getOnePostByIdUser = async (id) => {
+    const results = await client.query('SELECT id, title, text, image FROM posts WHERE id = $1', [id]);
+    return results.rows[0];
+};
+
 const getAllPosts = async (orderBy, title) => {
     let query = 'SELECT * FROM posts'
     
@@ -21,8 +40,8 @@ const getOnePostById = async (id) => {
     return results.rows[0];
 };
 
-const createPost = async (title, text, image) => {
-    return await client.query('INSERT INTO posts (title, text, image) VALUES ($1, $2, $3)', [title, text, image]);
+const createPost = async (title, text, image, idAdmin) => {
+    return await client.query('INSERT INTO posts (title, text, image, id_administrators) VALUES ($1, $2, $3, $4)', [title, text, image, idAdmin]);
 };
 
 const updatePost = async (title, text, image, id) => {
@@ -40,9 +59,8 @@ const getLastCreatedPost = async () => {
 
 const getMyFavorites = async (idUser, orderBy, title) => {
     let query = `
-    SELECT posts.* 
-    FROM posts 
-    INNER JOIN favorites 
+    SELECT posts.id, posts.title, posts.text, posts.image
+    FROM posts INNER JOIN favorites 
     ON posts.id = favorites.id_posts 
     WHERE favorites.id_users = '${idUser}'
     `;
@@ -65,5 +83,7 @@ module.exports = {
     updatePost,
     deletePost,
     getLastCreatedPost,
-    getMyFavorites
+    getMyFavorites,
+    getAllPostsUser,
+    getOnePostByIdUser
 }

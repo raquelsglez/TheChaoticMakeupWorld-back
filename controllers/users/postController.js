@@ -12,7 +12,7 @@ const getPosts = async (req, res, next) => {
     }
 
     try {
-        const response = await postQueries.getAllPosts(orderBy, title) //obtengo todos los post con un orden concreto y con filtro por título
+        const response = await postQueries.getAllPostsUser(orderBy, title) //obtengo todos los post con un orden concreto y con filtro por título
         return res.send(response)
     } catch (error) {
         return res.status(500).json({ message: "There was a problem trying to get posts"});
@@ -34,7 +34,7 @@ const getPost = async (req, res, next) => {
             }
         }
 
-        const response = await postQueries.getOnePostById(id) //obtengo un post de la base de dat por su id
+        const response = await postQueries.getOnePostByIdUser(id) //obtengo un post de la base de dat por su id
         if (!response){
             return res.status(404).json({ message: "Post not found"});
         }

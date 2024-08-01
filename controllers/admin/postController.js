@@ -33,8 +33,9 @@ const getPost = async (req, res, next) => {
 
 const createPost = async(req, res, next) => {
     const {title, text, image} = req.body;
+    const idAdmin = req.admin.id
     try {
-        await postQueries.createPost(title, text, image);
+        await postQueries.createPost(title, text, image, idAdmin);
         
         const newPost = await postQueries.getLastCreatedPost();
         return res.send(newPost);

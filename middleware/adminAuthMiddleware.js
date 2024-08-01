@@ -10,11 +10,11 @@ const requireToken = (req, res, next) => {
         let token = req.headers.authorization.split(' ')[1]
 
         // verificar que el token sea valido
-        jwt.verify(token, process.env.ADMIN_JWT_SECRET, (err, user) => {
+        jwt.verify(token, process.env.ADMIN_JWT_SECRET, (err, admin) => {
             if (err) {
                 return res.status(403).json({message:'Not Authorized'});
             }
-            req.user = user;
+            req.admin = admin;
             next();
         })
     }else{
