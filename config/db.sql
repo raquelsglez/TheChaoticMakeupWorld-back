@@ -1,5 +1,10 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE TABLE administrators (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    email VARCHAR(50) UNIQUE
+);
+
 CREATE TABLE posts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title VARCHAR(50),
@@ -7,6 +12,11 @@ CREATE TABLE posts (
     image TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id_administrators UUID,
+    CONSTRAINT fk_administrator
+        FOREIGN KEY(id_administrators)
+        REFERENCES administrators(id)
+        ON DELETE SET NULL
 );
 
 CREATE TABLE users (
@@ -19,23 +29,18 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE administrators (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    email VARCHAR(50) UNIQUE,
-);
-
 CREATE TABLE Favorites (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     id_users UUID NOT NULL,
     id_posts UUID NOT NULL,
     CONSTRAINT fk_user
         FOREIGN KEY(id_users) 
-        REFERENCES users(id),
-        ON DELETE CASCADE,
+        REFERENCES users(id)
+        ON DELETE CASCADE
     CONSTRAINT fk_post
         FOREIGN KEY(id_posts) 
-        REFERENCES posts(id),
-        ON DELETE CASCADE,
+        REFERENCES posts(id)
+        ON DELETE CASCADE
     CONSTRAINT unique_user_post 
         UNIQUE(id_users, id_posts)
 );
