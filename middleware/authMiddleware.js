@@ -14,9 +14,11 @@ const verifyToken = (req, res, next) => {
                 return res.status(403).json({message:'Not Authorized'});
             }
             req.user = user;
+            next();
         })
+    }else{
+        next();
     }
-    next();
 };
 
 
@@ -34,11 +36,11 @@ const requireToken = (req, res, next) => {
                 return res.status(403).json({message:'Not Authorized'});
             }
             req.user = user;
+            next();
         })
     }else{
         return res.status(403).json({message:'Not Authorized'});
     }
-    next();
 };
 
 module.exports = {

@@ -38,11 +38,32 @@ const getLastCreatedPost = async () => {
     return results.rows[0];
 };
 
+const getMyFavorites = async (idUser, orderBy, title) => {
+    let query = `
+    SELECT posts.* 
+    FROM posts 
+    INNER JOIN favorites 
+    ON posts.id = favorites.id_posts 
+    WHERE favorites.id_users = '${idUser}'
+    `;
+
+    if (title) { //opcion de obtner los posts con filtrado por title
+        query += ` AND title ILIKE '%${title}%'`;
+    }
+
+    if (orderBy){ //opcion de obtener los posts por orden asc o desc
+        query += (` ORDER BY ${orderBy}`)
+    }
+    const results = await client.query(query)
+    return results.rows
+}
+
 module.exports = {
     getAllPosts,
     getOnePostById,
     createPost,
     updatePost,
     deletePost,
-    getLastCreatedPost
+    getLastCreatedPost,
+    getMyFavorites
 }

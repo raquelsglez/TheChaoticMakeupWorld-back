@@ -1,4 +1,4 @@
-const favoriteQueries = require('../../queries/favoriteQueries');
+const favoriteQueries = require('../../queries/favoriteQueries.js');
 const postQueries = require('../../queries/postQueries.js');
 const authQueries = require('../../queries/authQueries.js');
 
@@ -61,7 +61,32 @@ const doUnfavorite = async (req, res, next) => {
     };
 };
 
+const getMyFavoritePosts = async (req, res, next) => {
+    const order = req.query.order; //obtener parametro de orden de la query
+    let orderBy = 'created_at DESC' //orden de los posts descendiente por fecha de creacion por defecto
+    const title = req.query.title;
+
+    if (order === 'created_at') {
+        orderBy = 'created_at ASC';
+    }
+
+    try {
+        const idUser = req.user.id;
+
+        const user = await authQueries.getUserById(idUser);
+        if(!user){
+            return res.status(404).json({message: "User not found"});
+        }
+
+        const response = await postQueries.getMyFavorites(idUser, orderBy, title)
+        return res.send(response)
+    } catch (error) {
+        return res.status(500).json({ message: "There was a problem trying to get favorite posts"});
+    };
+};
+
 module.exports = {
     doFavorite,
-    doUnfavorite
+    doUnfavorite,
+    getMyFavoritePosts
 };

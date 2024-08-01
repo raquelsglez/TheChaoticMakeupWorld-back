@@ -5,6 +5,7 @@ const cors = require('cors');
 const PORT = process.env.PORT;
 const postRoutes = require('./routes/users/postRoutes');
 const authRoutes = require('./routes/users/authRoutes');
+const userRoutes = require('./routes/users/userRoutes');
 const adminPostRoutes = require('./routes/admin/postRoutes');
 const adminAuthRoutes = require('./routes/admin/authRoutes');
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json()); //bodyParser -> analiza cuerpos de solicutds json
 
 app.use('/api/posts', postRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/me', userRoutes);
 app.use('/api/admin/posts', adminPostRoutes);
 app.use('/api/admin/auth', adminAuthRoutes);
 
